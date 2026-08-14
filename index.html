@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Cloud Notes Keeper</title>
+    <style>
+        body { font-family: Arial, sans-serif; background: #f4f6f8; margin: 0; padding: 0; }
+        .container { max-width: 700px; margin: 40px auto; padding: 20px; }
+        h1 { text-align: center; color: #2c3e50; }
+        .subtitle { text-align: center; color: #7f8c8d; margin-bottom: 30px; }
+        form { background: #fff; padding: 20px; border-radius: 8px; box-shadow: 0 2px 6px rgba(0,0,0,0.1); margin-bottom: 30px; }
+        input, textarea { width: 100%; padding: 10px; margin: 8px 0; border: 1px solid #ccc; border-radius: 5px; box-sizing: border-box; font-size: 14px; }
+        button { background: #3498db; color: white; border: none; padding: 10px 20px; border-radius: 5px; cursor: pointer; font-size: 14px; }
+        button:hover { background: #2980b9; }
+        .note { background: #fff; padding: 15px; border-radius: 8px; margin-bottom: 15px; box-shadow: 0 2px 6px rgba(0,0,0,0.08); position: relative; }
+        .note h3 { margin: 0 0 8px 0; color: #2c3e50; }
+        .note p { margin: 0 0 8px 0; color: #555; }
+        .note small { color: #999; }
+        .delete-btn { position: absolute; top: 15px; right: 15px; background: #e74c3c; padding: 5px 10px; font-size: 12px; text-decoration: none; color: white; border-radius: 4px; }
+        .delete-btn:hover { background: #c0392b; }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>☁️ Cloud Notes Keeper</h1>
+        <p class="subtitle">A simple cloud-hosted note storage app (Flask + SQLite on Render)</p>
+
+        <form action="/add" method="POST">
+            <input type="text" name="title" placeholder="Note title" required>
+            <textarea name="content" placeholder="Write your note here..." rows="4" required></textarea>
+            <button type="submit">Save Note to Cloud</button>
+        </form>
+
+        {% for note in notes %}
+        <div class="note">
+            <a href="/delete/{{ note[0] }}" class="delete-btn">Delete</a>
+            <h3>{{ note[1] }}</h3>
+            <p>{{ note[2] }}</p>
+            <small>Created: {{ note[3] }}</small>
+        </div>
+        {% else %}
+        <p style="text-align:center; color:#999;">No notes yet. Add one above!</p>
+        {% endfor %}
+    </div>
+</body>
+</html>
